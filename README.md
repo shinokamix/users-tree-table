@@ -22,8 +22,8 @@
 ## Технологический стек
 
 *   **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
-*   **Core**: [React 19](https://react.dev/) & React DOM 19
-*   **Language**: TypeScript 5 (Strict Mode)
+*   **Core**: [React 19](https://react.dev/)
+*   **Language**: TypeScript 5
 *   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (без использования компонентных библиотек вроде MUI или AntD)
 *   **Linting/Formatting**: ESLint 9, Prettier
 
