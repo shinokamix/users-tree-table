@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TreeNode } from '@/types';
 import { cn } from '@/lib/utils';
+import { ExpandButton } from '@/components/ui/ExpandButton';
 
 interface TableRowProps {
     node: TreeNode;
@@ -10,77 +11,48 @@ interface TableRowProps {
 export const TableRow = ({ node, level = 0 }: TableRowProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const hasChildren = node.children.length > 0;
-
-    // отступ и цвет фона для вложенности
     const paddingLeft = level * 24 + 16;
-    const isNested = level > 0;
 
     return (
-        <div role="rowgroup">
-            <div
-                role="row"
+        <>
+            <tr
                 aria-level={level + 1}
                 aria-expanded={hasChildren ? isExpanded : undefined}
                 className={cn(
-                    'grid grid-cols-12 items-center border-b border-slate-100 py-3 text-sm transition-colors hover:bg-slate-50',
-                    isNested ? 'bg-slate-50/50' : 'bg-white',
+                    'border-b border-slate-100 transition-colors hover:bg-slate-50',
+                    level > 0 ? 'bg-slate-50/50' : 'bg-white',
                 )}
             >
-                {/* name */}
-                <div
-                    role="gridcell"
-                    className="col-span-4 flex items-center pr-4 font-medium text-slate-900"
+                {/* Name */}
+                <td
+                    className="px-4 py-3 text-sm font-medium text-slate-900"
                     style={{ paddingLeft: `${paddingLeft}px` }}
                 >
-                    {hasChildren ? (
-                        <button
-                            onClick={() => setIsExpanded(!isExpanded)}
-                            aria-label={isExpanded ? 'Collapse row' : 'Expand row'}
-                            className="mr-2 flex h-6 w-6 shrink-0 items-center justify-center rounded text-slate-400 transition-colors hover:bg-slate-200 hover:text-slate-700"
-                        >
-                            <svg
-                                className={cn(
-                                    'h-4 w-4 transition-transform duration-200',
-                                    isExpanded && 'rotate-90',
-                                )}
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
-                        </button>
-                    ) : (
-                        // плейсхолдер, чтобы текст выравнивался с другими строками
-                        <span className="mr-2 h-6 w-6 shrink-0" aria-hidden="true" />
-                    )}
-                    <span className="truncate">{node.name}</span>
-                </div>
+                    <div className="flex items-center">
+                        <ExpandButton
+                            isExpanded={isExpanded}
+                            hasChildren={hasChildren}
+                            onToggle={() => setIsExpanded(!isExpanded)}
+                            ariaLabel={`${isExpanded ? 'Collapse' : 'Expand'} ${node.name}`}
+                        />
+                        <span className="truncate">{node.name}</span>
+                    </div>
+                </td>
 
-                {/* email */}
-                <div
-                    role="gridcell"
-                    className="col-span-4 truncate px-2 text-slate-500"
-                    title={node.email}
-                >
-                    {node.email}
-                </div>
+                {/* Email */}
+                <td className="px-4 py-3 text-sm text-slate-500">
+                    <span className="truncate" title={node.email}>
+                        {node.email}
+                    </span>
+                </td>
 
-                {/* balance */}
-                <div
-                    role="gridcell"
-                    className="col-span-2 px-2 text-right font-mono text-slate-600"
-                >
+                {/* Balance */}
+                <td className="px-4 py-3 text-right font-mono text-sm text-slate-600">
                     {node.balance}
-                </div>
+                </td>
 
-                {/* status */}
-                <div role="gridcell" className="col-span-2 flex justify-center px-2">
+                {/* Status */}
+                <td className="px-4 py-3 text-center">
                     <span
                         className={cn(
                             'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium',
@@ -91,17 +63,15 @@ export const TableRow = ({ node, level = 0 }: TableRowProps) => {
                     >
                         {node.isActive ? 'Active' : 'Inactive'}
                     </span>
-                </div>
-            </div>
+                </td>
+            </tr>
 
-            {/* рекурсивный рендер детей */}
-            {isExpanded && hasChildren && (
-                <>
-                    {node.children.map((child) => (
-                        <TableRow key={child.id} node={child} level={level + 1} />
-                    ))}
-                </>
-            )}
-        </div>
+            {/* Рекурсивный рендер детей */}
+            {isExpanded &&
+                hasChildren &&
+                node.children.map((child) => (
+                    <TableRow key={child.id} node={child} level={level + 1} />
+                ))}
+        </>
     );
 };
