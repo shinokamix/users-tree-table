@@ -1,32 +1,15 @@
 'use client';
 
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState } from 'react';
 import { User } from '@/types';
-import { buildTree, sortTree, filterTree, SortField, SortDirection } from '@/lib/data-helpers';
+import { buildTree, sortTree, filterTree } from '@/lib/data-helpers';
 import { TableHeader } from './TableHeader';
 import { TableRow } from './TableRow';
+import { useTableSort } from '@/hooks/useTableSort';
 
 interface UserTableProps {
     initialData: User[];
 }
-
-const useTableSort = () => {
-    const [sortField, setSortField] = useState<SortField | null>(null);
-    const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-
-    const handleSort = useCallback((field: SortField) => {
-        setSortField((current) => {
-            if (current === field) {
-                setSortDirection((dir) => (dir === 'asc' ? 'desc' : 'asc'));
-                return field;
-            }
-            setSortDirection('asc');
-            return field;
-        });
-    }, []);
-
-    return { sortField, sortDirection, handleSort };
-};
 
 export const UserTable = ({ initialData }: UserTableProps) => {
     const [showActiveOnly, setShowActiveOnly] = useState(false);
