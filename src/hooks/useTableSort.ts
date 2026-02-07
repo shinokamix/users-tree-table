@@ -5,16 +5,17 @@ export const useTableSort = () => {
     const [sortField, setSortField] = useState<SortField | null>(null);
     const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
-    const handleSort = useCallback((field: SortField) => {
-        setSortField((current) => {
-            if (current === field) {
+    const handleSort = useCallback(
+        (field: SortField) => {
+            if (sortField === field) {
                 setSortDirection((dir) => (dir === 'asc' ? 'desc' : 'asc'));
-                return field;
+            } else {
+                setSortField(field);
+                setSortDirection('asc');
             }
-            setSortDirection('asc');
-            return field;
-        });
-    }, []);
+        },
+        [sortField],
+    );
 
     return { sortField, sortDirection, handleSort };
 };
