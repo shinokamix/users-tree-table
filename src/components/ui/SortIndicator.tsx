@@ -9,7 +9,7 @@ export const SortIndicator = ({ isActive, direction }: SortIndicatorProps) => {
     if (!isActive) {
         return (
             <span
-                className="ml-1 text-slate-300 opacity-0 transition-opacity group-hover:opacity-100"
+                className="ml-1 opacity-0 transition-opacity group-hover:opacity-100"
                 aria-hidden="true"
             >
                 <Image src={'/sort-default.svg'} alt="" width={12} height={12} />
@@ -18,7 +18,7 @@ export const SortIndicator = ({ isActive, direction }: SortIndicatorProps) => {
     }
 
     return (
-        <span className="ml-1 text-blue-600" aria-hidden="true">
+        <span className="ml-1" aria-hidden="true">
             {direction === 'asc' ? (
                 <Image src={'/sort-asc.svg'} alt="" width={12} height={12} />
             ) : (

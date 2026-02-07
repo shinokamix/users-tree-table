@@ -9,8 +9,8 @@ interface TableHeaderProps {
 
 export const TableHeader = ({ currentSort, direction, onSort }: TableHeaderProps) => {
     return (
-        <thead className="border-b border-slate-200 bg-slate-50">
-            <tr className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+        <thead className="">
+            <tr className="text-xs font-semibold">
                 <th scope="col" className="px-4 py-3 text-left">
                     Name
                 </th>

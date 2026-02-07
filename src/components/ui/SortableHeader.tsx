@@ -28,7 +28,7 @@ export const SortableHeader = ({
         >
             <button
                 onClick={() => onSort(field)}
-                className={`group inline-flex items-center gap-1 hover:text-slate-800 ${
+                className={`group inline-flex items-center gap-1 ${
                     align === 'right' ? 'justify-end' : 'justify-start'
                 }`}
                 aria-label={`Sort by ${label} ${

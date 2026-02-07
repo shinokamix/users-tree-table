@@ -19,20 +19,17 @@ export const TableRow = ({ node, level = 0 }: TableRowProps) => {
                 aria-level={level + 1}
                 aria-expanded={hasChildren ? isExpanded : undefined}
                 className={cn(
-                    'border-b border-slate-100 transition-colors hover:bg-slate-50',
+                    'border-b border-slate-100 text-xs transition-colors hover:bg-slate-50 md:text-sm',
                     level > 0 ? 'bg-slate-50/50' : 'bg-white',
                 )}
             >
                 {/* Name */}
-                <td
-                    className="px-4 py-3 text-sm font-medium text-slate-900"
-                    style={{ paddingLeft: `${paddingLeft}px` }}
-                >
+                <td className="px-4 py-3 font-medium" style={{ paddingLeft: `${paddingLeft}px` }}>
                     <div className="flex items-center">
                         <ExpandButton
                             isExpanded={isExpanded}
                             hasChildren={hasChildren}
-                            onToggle={() => setIsExpanded(!isExpanded)}
+                            onToggle={() => setIsExpanded((prev) => !prev)}
                             ariaLabel={`${isExpanded ? 'Collapse' : 'Expand'} ${node.name}`}
                         />
                         <span className="truncate">{node.name}</span>
@@ -40,16 +37,14 @@ export const TableRow = ({ node, level = 0 }: TableRowProps) => {
                 </td>
 
                 {/* Email */}
-                <td className="px-4 py-3 text-sm text-slate-500">
+                <td className="px-4 py-3">
                     <span className="truncate" title={node.email}>
                         {node.email}
                     </span>
                 </td>
 
                 {/* Balance */}
-                <td className="px-4 py-3 text-right font-mono text-sm text-slate-600">
-                    {node.balance}
-                </td>
+                <td className="px-4 py-3 text-right font-mono">{node.balance}</td>
 
                 {/* Status */}
                 <td className="px-4 py-3 text-center">
